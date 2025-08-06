@@ -86,7 +86,7 @@ app.get('/info', (request, response) => {
     
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const {name, number} = request.body;
     console.log(name, number);
 
@@ -115,7 +115,8 @@ app.post('/api/persons', (request, response) => {
     newPerson.save()
         .then(savedPerson => {
             response.json(savedPerson);
-        });
+        })
+        .catch(error => next(error));
 })
 
 app.delete('/api/persons/:id', (request, response) => {
